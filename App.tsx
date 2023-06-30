@@ -16,7 +16,7 @@ import {Button, SafeAreaView} from 'react-native';
 //TODO: Connect to spotifies api
 //TODO: Set up async storage
 //TODO: Bridging Code
-//TODO:
+//TODO: https://reactnative.dev/docs/native-modules-intro
 
 function App(): JSX.Element {
   return (
