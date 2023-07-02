@@ -6,7 +6,8 @@
  */
 import React from 'react';
 import RootNavigator from './navigation/RootNavigatior';
-import AuthorizationProvider from './store/AccountDataContext';
+import {Provider} from 'react-redux';
+import {reduxStore} from './store/ReduxStore';
 
 //TODO: Add Redux + RDK
 //TODO: Connect to spotifies api
@@ -18,9 +19,9 @@ import AuthorizationProvider from './store/AccountDataContext';
 
 function App(): JSX.Element {
   return (
-    <AuthorizationProvider>
+    <Provider store={reduxStore}>
       <RootNavigator />
-    </AuthorizationProvider>
+    </Provider>
   );
 }
 

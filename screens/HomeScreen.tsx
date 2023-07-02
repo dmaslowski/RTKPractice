@@ -1,21 +1,20 @@
 import React from 'react';
 import {Button, SafeAreaView, Text} from 'react-native';
-import {
-  AuthActions,
-  useAuthorizationDispatchProvider,
-  useAuthorizationProvider,
-} from '../store/AccountDataContext';
+
+import {saveUserDataToStorage, selectUser} from '../store/AccountDataSlice';
+import {useAppDispatch, useAppSelector} from '../store/ReduxHooks';
 
 const HomeScreen = () => {
-  const accountInfo = useAuthorizationProvider();
-  const accountInfoDispatch = useAuthorizationDispatchProvider();
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
   return (
     <SafeAreaView>
-      <Text>Welcome {accountInfo?.user?.firstName} </Text>
+      <Text>Welcome {user?.firstName} </Text>
       <Button
         title="Logout"
         onPress={() => {
-          accountInfoDispatch({type: AuthActions.DELETEUSER});
+          dispatch(saveUserDataToStorage(undefined));
         }}
       />
     </SafeAreaView>

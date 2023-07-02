@@ -1,18 +1,13 @@
 import React, {useState} from 'react';
 import {Button, SafeAreaView, TextInput} from 'react-native';
-
-import {
-  AuthActions,
-  useAuthorizationDispatchProvider,
-} from '../store/AccountDataContext';
+import {useAppDispatch} from '../store/ReduxHooks';
+import {saveUserDataToStorage} from '../store/AccountDataSlice';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-
-  const authDispatch = useAuthorizationDispatchProvider();
-
+  const dispatch = useAppDispatch();
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center', gap: 10}}>
       <TextInput
@@ -40,14 +35,13 @@ const LoginScreen = () => {
         title="Login"
         onPress={() => {
           if (email !== '' && firstName !== '' && lastName !== '') {
-            authDispatch({
-              type: AuthActions.CREATEUSER,
-              payload: {
+            dispatch(
+              saveUserDataToStorage({
                 email,
                 firstName,
                 lastName,
-              },
-            });
+              }),
+            );
           }
         }}
       />
