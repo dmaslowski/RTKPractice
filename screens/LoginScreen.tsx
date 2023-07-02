@@ -1,20 +1,12 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {Button, SafeAreaView, TextInput} from 'react-native';
-import {RootStackParamList} from '../navigation/RootNavigatior';
-import {NavigationKeys} from '../constants/navigationConstants';
 
 import {
   AuthActions,
   useAuthorizationDispatchProvider,
-} from '../store/AuthorizationContext';
+} from '../store/AccountDataContext';
 
-type LoginScreenProps = NativeStackScreenProps<
-  RootStackParamList,
-  NavigationKeys.LoginScreen
->;
-
-const LoginScreen = ({navigation}: LoginScreenProps) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -48,24 +40,15 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
         title="Login"
         onPress={() => {
           if (email !== '' && firstName !== '' && lastName !== '') {
-            if (authDispatch) {
-              authDispatch({
-                type: AuthActions.LOGIN,
-                payload: {
-                  email,
-                  firstName,
-                  lastName,
-                },
-              });
-            }
-            navigation.navigate(NavigationKeys.HomeScreen);
+            authDispatch({
+              type: AuthActions.CREATEUSER,
+              payload: {
+                email,
+                firstName,
+                lastName,
+              },
+            });
           }
-        }}
-      />
-      <Button
-        title="Skip"
-        onPress={() => {
-          navigation.navigate(NavigationKeys.HomeScreen);
         }}
       />
     </SafeAreaView>

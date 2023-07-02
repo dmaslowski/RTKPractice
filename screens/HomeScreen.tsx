@@ -1,10 +1,25 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {useAuthorizationProvider} from '../store/AuthorizationContext';
+import {Button, SafeAreaView, Text} from 'react-native';
+import {
+  AuthActions,
+  useAuthorizationDispatchProvider,
+  useAuthorizationProvider,
+} from '../store/AccountDataContext';
 
 const HomeScreen = () => {
-  const user = useAuthorizationProvider();
-  return <Text>Welcome {user?.firstName} </Text>;
+  const accountInfo = useAuthorizationProvider();
+  const accountInfoDispatch = useAuthorizationDispatchProvider();
+  return (
+    <SafeAreaView>
+      <Text>Welcome {accountInfo?.user?.firstName} </Text>
+      <Button
+        title="Logout"
+        onPress={() => {
+          accountInfoDispatch({type: AuthActions.DELETEUSER});
+        }}
+      />
+    </SafeAreaView>
+  );
 };
 
 export default HomeScreen;

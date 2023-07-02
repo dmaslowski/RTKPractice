@@ -6,7 +6,7 @@
  */
 import React from 'react';
 import RootNavigator from './navigation/RootNavigatior';
-import AuthorizationProvider from './store/AuthorizationContext';
+import AuthorizationProvider from './store/AccountDataContext';
 
 //TODO: Add Redux + RDK
 //TODO: Connect to spotifies api

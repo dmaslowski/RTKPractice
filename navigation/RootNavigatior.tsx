@@ -4,7 +4,8 @@ import {NavigationKeys} from '../constants/navigationConstants';
 import {NavigationContainer} from '@react-navigation/native';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
-import {useAuthorizationProvider} from '../store/AuthorizationContext';
+import {useAuthorizationProvider} from '../store/AccountDataContext';
+import OnboardingScreen from '../screens/OnboardingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -15,19 +16,27 @@ export type RootStackParamList = {
 };
 
 const RootNavigator = () => {
-  const user = useAuthorizationProvider();
-  const hasUser = user?.firstName !== '';
+  const accountData = useAuthorizationProvider();
+  const hasUser = accountData?.user !== undefined;
+
+  if (accountData?.isHydrating) {
+    return <OnboardingScreen />;
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={
-          hasUser ? NavigationKeys.HomeScreen : NavigationKeys.LoginScreen
-        }>
-        <Stack.Screen
-          name={NavigationKeys.LoginScreen}
-          component={LoginScreen}
-        />
-        <Stack.Screen name={NavigationKeys.HomeScreen} component={HomeScreen} />
+      <Stack.Navigator>
+        {hasUser ? (
+          <Stack.Screen
+            name={NavigationKeys.HomeScreen}
+            component={HomeScreen}
+          />
+        ) : (
+          <Stack.Screen
+            name={NavigationKeys.LoginScreen}
+            component={LoginScreen}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
